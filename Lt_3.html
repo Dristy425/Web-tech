@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark/Light Mode Toggle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        header, footer {
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            padding: 50px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Portfolio</h1>
+    </header>
+    <main>
+        <p>Welcome to my portfolio website!</p>
+        <button id="toggleBtn">Switch to Dark Mode</button>
+    </main>
+    <footer>
+        <p>&copy; 2025 My Portfolio</p>
+    </footer>
+
+    <script>
+        const toggleBtn = document.getElementById('toggleBtn');
+        let isDarkMode = false;
+
+        // Light and Dark theme colors
+        const lightTheme = {
+            background: '#ffffff',
+            text: '#000000',
+            headerFooter: '#f2f2f2',
+            button: '#000000',
+            buttonText: '#ffffff'
+        };
+
+        const darkTheme = {
+            background: '#121212',
+            text: '#ffffff',
+            headerFooter: '#1f1f1f',
+            button: '#ffffff',
+            buttonText: '#000000'
+        };
+
+        function applyTheme(theme) {
+            document.body.style.backgroundColor = theme.background;
+            document.body.style.color = theme.text;
+            document.querySelector('header').style.backgroundColor = theme.headerFooter;
+            document.querySelector('footer').style.backgroundColor = theme.headerFooter;
+            toggleBtn.style.backgroundColor = theme.button;
+            toggleBtn.style.color = theme.buttonText;
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            if (isDarkMode) {
+                applyTheme(darkTheme);
+                toggleBtn.innerText = "Switch to Light Mode";
+            } else {
+                applyTheme(lightTheme);
+                toggleBtn.innerText = "Switch to Dark Mode";
+            }
+        });
+
+        // Apply default theme (light)
+        applyTheme(lightTheme);
+    </script>
+</body>
+</html>

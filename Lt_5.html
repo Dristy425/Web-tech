@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 50px;
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+        .result p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Text Analyzer Tool</h2>
+    <textarea id="inputText" placeholder="Paste your paragraph here..."></textarea><br>
+    <button id="analyzeBtn">Analyze Text</button>
+
+    <div class="result" id="resultDiv" style="display:none;">
+        <p id="charCount"></p>
+        <p id="wordCount"></p>
+        <p id="reversedText"></p>
+    </div>
+
+    <script>
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const inputText = document.getElementById('inputText');
+        const resultDiv = document.getElementById('resultDiv');
+        const charCount = document.getElementById('charCount');
+        const wordCount = document.getElementById('wordCount');
+        const reversedText = document.getElementById('reversedText');
+
+        analyzeBtn.addEventListener('click', () => {
+            let text = inputText.value.trim();
+
+            if (text === '') {
+                alert('Please enter some text!');
+                resultDiv.style.display = 'none';
+                return;
+            }
+
+            // Character count
+            const totalChars = text.length;
+
+            // Word count (handle multiple spaces)
+            const words = text.split(/\s+/).filter(word => word !== '');
+            const totalWords = words.length;
+
+            // Reverse text
+            const reversed = text.split('').reverse().join('');
+
+            // Display results
+            charCount.innerText = `Total Characters: ${totalChars}`;
+            wordCount.innerText = `Total Words: ${totalWords}`;
+            reversedText.innerText = `Reversed Text: ${reversed}`;
+            resultDiv.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

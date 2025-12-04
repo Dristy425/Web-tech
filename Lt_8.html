@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Form Fields</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 50px;
+            background-color: #f2f2f2;
+        }
+        form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 300px;
+            margin: auto;
+        }
+        label, select, input {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">Smart Registration Form</h2>
+    <form id="regForm">
+        <label for="userType">I am a:</label>
+        <select id="userType">
+            <option value="">Select Type</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+        </select>
+
+        <div id="rollDiv" style="display:none;">
+            <label for="rollNumber">Roll Number:</label>
+            <input type="text" id="rollNumber" placeholder="Enter Roll Number">
+        </div>
+
+        <div id="deptDiv" style="display:none;">
+            <label for="department">Department:</label>
+            <input type="text" id="department" placeholder="Enter Department">
+        </div>
+    </form>
+
+    <script>
+        const userType = document.getElementById('userType');
+        const rollDiv = document.getElementById('rollDiv');
+        const deptDiv = document.getElementById('deptDiv');
+
+        userType.addEventListener('change', () => {
+            const selected = userType.value;
+
+            if (selected === 'student') {
+                rollDiv.style.display = 'block';
+                deptDiv.style.display = 'none';
+            } else if (selected === 'teacher') {
+                deptDiv.style.display = 'block';
+                rollDiv.style.display = 'none';
+            } else {
+                // If no selection
+                rollDiv.style.display = 'none';
+                deptDiv.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

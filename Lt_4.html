@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Student Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 50px;
+            background-color: #f2f2f2;
+        }
+        input {
+            padding: 5px;
+            margin: 5px;
+        }
+        button {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Student Management System</h2>
+
+    <div>
+        <input type="text" id="name" placeholder="Name">
+        <input type="text" id="roll" placeholder="Roll">
+        <input type="text" id="department" placeholder="Department">
+        <button id="addBtn">Add Student</button>
+        <div class="error" id="errorMsg"></div>
+    </div>
+
+    <table id="studentTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Roll</th>
+                <th>Department</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Student rows will appear here -->
+        </tbody>
+    </table>
+
+    <script>
+        const addBtn = document.getElementById('addBtn');
+        const nameInput = document.getElementById('name');
+        const rollInput = document.getElementById('roll');
+        const deptInput = document.getElementById('department');
+        const errorMsg = document.getElementById('errorMsg');
+        const tableBody = document.querySelector('#studentTable tbody');
+
+        addBtn.addEventListener('click', () => {
+            const name = nameInput.value.trim();
+            const roll = rollInput.value.trim();
+            const dept = deptInput.value.trim();
+
+            // Validate inputs
+            if (name === '' || roll === '' || dept === '') {
+                errorMsg.innerText = 'All fields are required!';
+                return;
+            }
+
+            errorMsg.innerText = '';
+
+            // Create table row
+            const row = document.createElement('tr');
+
+            // Create cells
+            const nameCell = document.createElement('td');
+            nameCell.innerText = name;
+            const rollCell = document.createElement('td');
+            rollCell.innerText = roll;
+            const deptCell = document.createElement('td');
+            deptCell.innerText = dept;
+            const actionCell = document.createElement('td');
+
+            // Create Delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerText = 'Delete';
+            deleteBtn.style.backgroundColor = '#f44336';
+            deleteBtn.addEventListener('click', () => {
+                row.remove();
+            });
+
+            actionCell.appendChild(deleteBtn);
+
+            // Append cells to row
+            row.appendChild(nameCell);
+            row.appendChild(rollCell);
+            row.appendChild(deptCell);
+            row.appendChild(actionCell);
+
+            // Append row to table
+            tableBody.appendChild(row);
+
+            // Clear input fields
+            nameInput.value = '';
+            rollInput.value = '';
+            deptInput.value = '';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        header {
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .section {
+            display: none;
+            padding: 50px;
+            text-align: center;
+        }
+        .active {
+            display: block;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input, textarea {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+        #clock {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Portfolio</h1>
+        <button id="themeToggle">Switch to Dark Mode</button>
+        <div id="greeting"></div>
+        <div id="clock"></div>
+    </header>
+
+    <nav>
+        <a data-section="about">About</a>
+        <a data-section="projects">Projects</a>
+        <a data-section="contact">Contact</a>
+    </nav>
+
+    <div id="about" class="section active">
+        <h2>About Me</h2>
+        <p>Hello! I am a web developer passionate about creating interactive and dynamic websites.</p>
+    </div>
+
+    <div id="projects" class="section">
+        <h2>Projects</h2>
+        <p>Here are some of my projects showcasing web development, design, and interactivity.</p>
+    </div>
+
+    <div id="contact" class="section">
+        <h2>Contact Me</h2>
+        <form id="contactForm" novalidate>
+            <div class="error" id="nameError"></div>
+            <input type="text" id="name" placeholder="Your Name">
+            
+            <div class="error" id="emailError"></div>
+            <input type="email" id="email" placeholder="Your Email">
+            
+            <div class="error" id="messageError"></div>
+            <textarea id="message" rows="5" placeholder="Your Message (min 10 characters)"></textarea>
+            
+            <button type="submit">Send Message</button>
+            <div id="successMsg" style="color:green; margin-top:10px;"></div>
+        </form>
+    </div>
+
+    <script>
+        // Theme Toggle
+        const themeBtn = document.getElementById('themeToggle');
+        let darkMode = false;
+
+        themeBtn.addEventListener('click', () => {
+            darkMode = !darkMode;
+            if(darkMode){
+                document.body.style.backgroundColor = '#121212';
+                document.body.style.color = '#ffffff';
+                themeBtn.innerText = 'Switch to Light Mode';
+            } else {
+                document.body.style.backgroundColor = '#ffffff';
+                document.body.style.color = '#000000';
+                themeBtn.innerText = 'Switch to Dark Mode';
+            }
+        });
+
+        // Section Toggling
+        const navLinks = document.querySelectorAll('nav a');
+        const sections = document.querySelectorAll('.section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                sections.forEach(sec => sec.classList.remove('active'));
+                const target = document.getElementById(link.getAttribute('data-section'));
+                target.classList.add('active');
+            });
+        });
+
+        // Greeting based on time
+        const greetingDiv = document.getElementById('greeting');
+        const clockDiv = document.getElementById('clock');
+
+        function updateClockAndGreeting() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            // 12-hour format
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const strHours = hours.toString().padStart(2,'0');
+            const strMinutes = minutes.toString().padStart(2,'0');
+            const strSeconds = seconds.toString().padStart(2,'0');
+            clockDiv.innerText = `${strHours}:${strMinutes}:${strSeconds} ${ampm}`;
+
+            // Greeting
+            const h = now.getHours();
+            if(h < 12) greetingDiv.innerText = 'Good Morning!';
+            else if(h < 18) greetingDiv.innerText = 'Good Afternoon!';
+            else greetingDiv.innerText = 'Good Evening!';
+        }
+
+        updateClockAndGreeting();
+        setInterval(updateClockAndGreeting, 1000);
+
+        // Contact Form Validation
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let valid = true;
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            document.getElementById('nameError').innerText = '';
+            document.getElementById('emailError').innerText = '';
+            document.getElementById('messageError').innerText = '';
+            document.getElementById('successMsg').innerText = '';
+
+            if(name === '') {
+                document.getElementById('nameError').innerText = 'Name cannot be empty.';
+                valid = false;
+            }
+
+            if(!email.includes('@') || !email.includes('.')) {
+                document.getElementById('emailError').innerText = 'Enter a valid email.';
+                valid = false;
+            }
+
+            if(message.length < 10) {
+                document.getElementById('messageError').innerText = 'Message must be at least 10 characters.';
+                valid = false;
+            }
+
+            if(valid) {
+                document.getElementById('successMsg').innerText = 'Message sent successfully!';
+                form.reset();
+            }
+        });
+    </script>
+
+</body>
+</html>
