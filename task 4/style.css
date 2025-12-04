@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.student-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.student-item {
+    background-color: lightgray;
+    padding: 6px;
+    margin: 5px 0;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+.btn-edit {
+    color: blue;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.btn-delete {
+    color: red;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+button {
+    padding: 6px 10px;
+    background-color: lightblue;
+    border: none;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #add8e6;
+}
